@@ -3,6 +3,11 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
+extends:
+  template: simple-template.yml
+  parameters:
+    branch: "release"
+
 trigger:
   branches:
     include:
@@ -11,17 +16,3 @@ trigger:
 
 pool:
   vmImage: ubuntu-latest
-
-parameters:
-  - name: branch
-    type: string
-    default: feature/test
-
-steps:
-- script: echo Hello, ${{parameters.branch}}
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
