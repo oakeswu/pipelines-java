@@ -12,8 +12,13 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
+parameters:
+  - name: branch
+    type: string
+    default: feature/test
+
 steps:
-- script: echo Hello, Oakes!
+- script: echo Hello, ${{parameters.branch}}
   displayName: 'Run a one-line script'
 
 - script: |
