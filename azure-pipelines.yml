@@ -6,7 +6,7 @@
 extends:
   template: simple-template.yml
   parameters:
-    branch: "release"
+    yesNo: true
 
 trigger:
   branches:
