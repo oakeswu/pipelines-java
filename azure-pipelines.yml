@@ -8,25 +8,14 @@
 #   parameters:
 #     yesNo: true
 
-# trigger:
-#   branches:
-#     include:
-#       - master
-#       - release/*
+trigger:
+  branches:
+    include:
+      - master
+      - release/*
 
-# pool:
-#   vmImage: ubuntu-latest
+pool:
+  vmImage: ubuntu-latest
   
-# steps:
-#   - template: simple-template.yml
-
-parameters:
-- name: yesNo # name of the parameter; required
-  type: boolean # data type of the parameter; required
-  default: false
-  
-variables:
-  favoriteVeggie: 'brussels sprouts'
-
 steps:
-- script: echo ${{ parameters.yesNo }},${{ variables.favoriteVeggie }}
+  - template: simple-template.yml
