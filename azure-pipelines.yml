@@ -3,10 +3,10 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
-extends:
-  template: simple-template.yml
-  parameters:
-    yesNo: true
+# extends:
+#   template: simple-template.yml
+#   parameters:
+#     yesNo: true
 
 trigger:
   branches:
@@ -16,3 +16,6 @@ trigger:
 
 pool:
   vmImage: ubuntu-latest
+  
+steps:
+  - template: simple-template.yml
