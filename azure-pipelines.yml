@@ -8,14 +8,20 @@
 #   parameters:
 #     yesNo: true
 
-trigger:
-  branches:
-    include:
-      - master
-      - release/*
+# trigger:
+#   branches:
+#     include:
+#       - master
+#       - release/*
+
+# pool:
+#   vmImage: ubuntu-latest
+  
+# steps:
+#   - template: simple-template.yml
 
 pool:
   vmImage: ubuntu-latest
   
 steps:
-  - template: simple-template.yml
+  - bash: echo "hello"
