@@ -180,4 +180,5 @@ jobs:
   steps:
   - bash: echo $(global_variable)
   - bash: echo $(job_variable2)
+  - bash: echo $(job_variable1)
   - bash: echo $GLOBAL_VARIABLE
