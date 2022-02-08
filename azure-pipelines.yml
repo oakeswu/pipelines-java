@@ -123,12 +123,35 @@
 #     displayName: Second variable pass
 
 
+# # 测试宏语法
+# variables:
+#  - name: projectName
+#    value: contoso
 
+# steps: 
+# - bash: echo $(projectName)
+# - powershell: echo $(projectName)
+# - script: echo $(projectName)
+
+
+
+# Set variables once
 variables:
- - name: projectName
-   value: contoso
+  configuration: debug
+  platform: x64
 
-steps: 
-- bash: echo $(projectName)
-- powershell: echo $(projectName)
-- script: echo $(projectName)
+steps:
+
+# Use them once
+- task: MSBuild@1
+  inputs:
+    solution: solution1.sln
+    configuration: $(configuration) # Use the variable
+    platform: $(platform)
+
+# Use them again
+- task: MSBuild@1
+  inputs:
+    solution: solution2.sln
+    configuration: $(configuration) # Use the variable
+    platform: $(platform)
