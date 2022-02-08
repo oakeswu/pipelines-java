@@ -20,17 +20,36 @@
 # steps:
 #   - template: simple-template.yml
 
-jobs:
-- job: myAJob
-  pool:
-    vmImage: ubuntu-latest
+# jobs:
+# - job: myAJob
+#   pool:
+#     vmImage: ubuntu-latest
   
-  steps:
-    - bash: echo "hello A"
+#   steps:
+#     - bash: echo "hello A"
 
-- job: myBJob
-  pool:
-    vmImage: ubuntu-latest
+# - job: myBJob
+#   pool:
+#     vmImage: ubuntu-latest
   
-  steps:
-    - bash: echo "hello B"
+#   steps:
+#     - bash: echo "hello B"
+
+stages:
+- stage: stageA
+  jobs:
+    - job: jobA
+      steps:
+        -  script: echo "stageA jobA"
+    - job: jobB
+      steps:
+        - script: echo "stageA jobB"
+
+- stage: stageB
+  jobs:
+    - job: jobA
+      steps:
+        - script: echo "stageB jobA"
+    - job: jobB
+      steps:
+        - script: echo "stageB jobB"
