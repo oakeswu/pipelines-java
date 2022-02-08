@@ -184,24 +184,55 @@
 #   - bash: echo $GLOBAL_VARIABLE
 
 
+# #设置秘密变量
+# variables:
+#  GLOBAL_MYSECRET: $(mySecret) # this will not work because the secret variable needs to be mapped as env
+#  GLOBAL_MY_MAPPED_ENV_VAR: $(nonSecretVariable) # this works because it's not a secret.
 
-variables:
- GLOBAL_MYSECRET: $(mySecret) # this will not work because the secret variable needs to be mapped as env
- GLOBAL_MY_MAPPED_ENV_VAR: $(nonSecretVariable) # this works because it's not a secret.
+# steps:
+
+# - powershell: |
+#     Write-Host "Using an input-macro works: $(mySecret)"
+#     Write-Host "Using the env var directly does not work: $env:MYSECRET"
+#     Write-Host "Using a global secret var mapped in the pipeline does not work either: $env:GLOBAL_MYSECRET"
+#     Write-Host "Using a global non-secret var mapped in the pipeline works: $env:GLOBAL_MY_MAPPED_ENV_VAR" 
+#     Write-Host "Using the mapped env var for this task works and is recommended: $env:MY_MAPPED_ENV_VAR"
+#   env:
+#     MY_MAPPED_ENV_VAR: $(mySecret) # the recommended way to map to an env variable
+
+# - bash: 
+#   env:
+#     MY_MAPPED_ENV_VAR: $(mySecret) # the recommended way to map to an env variable
+
+# - script: echo $(mySecret),$GLOBAL_MY_MAPPED_ENV_VAR
+
+
+
+# 测试变量组中的秘密变量
+variables: 
+- group: 'my-var-group' # variable group
+- name: 'devopsAccount' # new variable defined in YAML
+  value: 'contoso'
+- name: 'projectName' # new variable defined in YAML
+  value: 'contosoads'
 
 steps:
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: |
+        # Encode the Personal Access Token (PAT)
+        # $env:USER is a normal variable in the variable group
+        # $env:MY_MAPPED_TOKEN is a mapped secret variable
+        $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f $env:USER,$env:MY_MAPPED_TOKEN)))
 
-- powershell: |
-    Write-Host "Using an input-macro works: $(mySecret)"
-    Write-Host "Using the env var directly does not work: $env:MYSECRET"
-    Write-Host "Using a global secret var mapped in the pipeline does not work either: $env:GLOBAL_MYSECRET"
-    Write-Host "Using a global non-secret var mapped in the pipeline works: $env:GLOBAL_MY_MAPPED_ENV_VAR" 
-    Write-Host "Using the mapped env var for this task works and is recommended: $env:MY_MAPPED_ENV_VAR"
+        # Get a list of releases
+        $uri = "https://vsrm.dev.azure.com/$(devopsAccount)/$(projectName)/_apis/release/releases?api-version=5.1"
+
+        # Invoke the REST call
+        $result = Invoke-RestMethod -Uri $uri -Method Get -ContentType "application/json" -Headers @{Authorization=("Basic {0}" -f $base64AuthInfo)}
+
+        # Output releases in JSON
+        Write-Host $result.value
   env:
-    MY_MAPPED_ENV_VAR: $(mySecret) # the recommended way to map to an env variable
-
-- bash: 
-  env:
-    MY_MAPPED_ENV_VAR: $(mySecret) # the recommended way to map to an env variable
-
-- script: echo $(mySecret)
+    MY_MAPPED_TOKEN: $(token) # Maps the secret variable $(token) from my-var-group
