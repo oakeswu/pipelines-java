@@ -71,21 +71,34 @@
 
 
 
-stages:
-- stage: stageA
-  jobs:
-    - job: InitialA
-      steps:
-        -  script: echo "stageA InitialA"
-    - job: InitialB
-      steps:
-        - script: echo "stageA InitialB"
+# stages:
+# - stage: stageA
+#   jobs:
+#     - job: InitialA
+#       steps:
+#         -  script: echo "stageA InitialA"
+#     - job: InitialB
+#       steps:
+#         - script: echo "stageA InitialB"
 
-- stage: stageB
-  jobs:
-    - job: Subsequent
-      dependsOn:
-        - InitialA
-        - InitialB
-      steps:
-        - script: echo "stageB Subsequent"
+# - stage: stageB
+#   jobs:
+#     - job: Subsequent
+#       dependsOn:
+#         - InitialA
+#         - InitialB
+#       steps:
+#         - script: echo "stageB Subsequent"
+
+
+
+jobs:
+- job: A
+  steps:
+  - script: echo hello
+
+- job: B
+  dependsOn: A
+  condition: and(succeeded(), eq(variables['build.sourceBranch'], 'master'))
+  steps:
+  - script: echo this only runs for master
