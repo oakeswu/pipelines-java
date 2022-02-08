@@ -20,6 +20,8 @@
 # steps:
 #   - template: simple-template.yml
 
+
+
 # jobs:
 # - job: myAJob
 #   pool:
@@ -35,21 +37,34 @@
 #   steps:
 #     - bash: echo "hello B"
 
-stages:
-- stage: stageA
-  jobs:
-    - job: jobA
-      steps:
-        -  script: echo "stageA jobA"
-    - job: jobB
-      steps:
-        - script: echo "stageA jobB"
 
-- stage: stageB
-  jobs:
-    - job: jobA
-      steps:
-        - script: echo "stageB jobA"
-    - job: jobB
-      steps:
-        - script: echo "stageB jobB"
+
+# stages:
+# - stage: stageA
+#   jobs:
+#     - job: jobA
+#       steps:
+#         -  script: echo "stageA jobA"
+#     - job: jobB
+#       steps:
+#         - script: echo "stageA jobB"
+
+# - stage: stageB
+#   jobs:
+#     - job: jobA
+#       steps:
+#         - script: echo "stageB jobA"
+#     - job: jobB
+#       steps:
+#         - script: echo "stageB jobB"
+
+
+
+jobs:
+  - job: Debug
+    steps:
+      - script: echo hello from the debug build
+  - job: Release
+    dependsOn: Debug
+    steps:
+      - script: echo hello from the release build
