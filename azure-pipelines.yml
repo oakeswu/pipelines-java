@@ -92,13 +92,28 @@
 
 
 
-jobs:
-- job: A
-  steps:
-  - script: echo hello
+# jobs:
+# - job: A
+#   steps:
+#   - script: echo hello
 
-- job: B
-  dependsOn: A
-  condition: and(succeeded(), eq(variables['build.sourceBranch'], 'master'))
-  steps:
-  - script: echo this only runs for master
+# - job: B
+#   dependsOn: A
+#   condition: and(succeeded(), eq(variables['build.sourceBranch'], 'master'))
+#   steps:
+#   - script: echo this only runs for master
+
+
+
+variables:
+  mySimpleVar: simple var value
+  "my.dotted.var": dotted var value
+  "my var with spaces": var with spaces value
+
+steps:
+- script: echo Input macro = $(mySimpleVar). Env var = %MYSIMPLEVAR%
+  condition: eq(variables['agent.os'], 'Windows_NT')
+- script: echo Input macro = $(mySimpleVar). Env var = $MYSIMPLEVAR
+  condition: in(variables['agent.os'], 'Darwin', 'Linux')
+- bash: echo Input macro = $(my.dotted.var). Env var = $MY_DOTTED_VAR
+- powershell: Write-Host "Input macro = $(my var with spaces). Env var = $env:MY_VAR_WITH_SPACES"
