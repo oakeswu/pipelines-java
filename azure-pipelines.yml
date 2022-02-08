@@ -60,11 +60,32 @@
 
 
 
-jobs:
-  - job: Debug
-    steps:
-      - script: echo hello from the debug build
-  - job: Release
-    dependsOn: Debug
-    steps:
-      - script: echo hello from the release build
+# jobs:
+#   - job: Debug
+#     steps:
+#       - script: echo hello from the debug build
+#   - job: Release
+#     dependsOn: Debug
+#     steps:
+#       - script: echo hello from the release build
+
+
+
+stages:
+- stage: stageA
+  jobs:
+    - job: InitialA
+      steps:
+        -  script: echo "stageA InitialA"
+    - job: InitialB
+      steps:
+        - script: echo "stageA InitialB"
+
+- stage: stageB
+  jobs:
+    - job: Subsequent
+      dependsOn:
+        - InitialA
+        - InitialB
+      steps:
+        - script: echo "stageB Subsequent"
