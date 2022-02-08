@@ -157,28 +157,46 @@
 #     platform: $(platform)
 
 
-# 测试变量scope
+# # 测试变量scope
+# variables:
+#   global_variable: value    # this is available to all jobs
+
+# jobs:
+# - job: job1
+#   pool:
+#     vmImage: 'ubuntu-latest'
+#   variables:
+#     job_variable1: value1    # this is only available in job1
+#   steps:
+#   - bash: echo $(global_variable)
+#   - bash: echo $(job_variable1)
+#   - bash: echo $JOB_VARIABLE1 # variables are available in the script environment too
+
+# - job: job2
+#   pool:
+#     vmImage: 'ubuntu-latest'
+#   variables:
+#     job_variable2: value2    # this is only available in job2
+#   steps:
+#   - bash: echo $(global_variable)
+#   - bash: echo $(job_variable2)
+#   - bash: echo $(job_variable1)
+#   - bash: echo $GLOBAL_VARIABLE
+
+
+
 variables:
-  global_variable: value    # this is available to all jobs
+ GLOBAL_MYSECRET: $(mySecret) # this will not work because the secret variable needs to be mapped as env
+ GLOBAL_MY_MAPPED_ENV_VAR: $(nonSecretVariable) # this works because it's not a secret.
 
-jobs:
-- job: job1
-  pool:
-    vmImage: 'ubuntu-latest'
-  variables:
-    job_variable1: value1    # this is only available in job1
-  steps:
-  - bash: echo $(global_variable)
-  - bash: echo $(job_variable1)
-  - bash: echo $JOB_VARIABLE1 # variables are available in the script environment too
+steps:
 
-- job: job2
-  pool:
-    vmImage: 'ubuntu-latest'
-  variables:
-    job_variable2: value2    # this is only available in job2
-  steps:
-  - bash: echo $(global_variable)
-  - bash: echo $(job_variable2)
-  - bash: echo $(job_variable1)
-  - bash: echo $GLOBAL_VARIABLE
+- powershell: 
+  env:
+    MY_MAPPED_ENV_VAR: $(mySecret) # the recommended way to map to an env variable
+
+- bash: 
+  env:
+    MY_MAPPED_ENV_VAR: $(mySecret) # the recommended way to map to an env variable
+    
+- script: echo $(mySecret)
