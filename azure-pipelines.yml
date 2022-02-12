@@ -39,24 +39,24 @@
 
 
 
-# stages:
-# - stage: stageA
-#   jobs:
-#     - job: jobA
-#       steps:
-#         -  script: echo "stageA jobA"
-#     - job: jobB
-#       steps:
-#         - script: echo "stageA jobB"
+stages:
+- stage: stageA
+  jobs:
+    - job: jobA
+      steps:
+        -  script: echo "stageA jobA"
+    - job: jobB
+      steps:
+        - script: echo "stageA jobB"
 
-# - stage: stageB
-#   jobs:
-#     - job: jobA
-#       steps:
-#         - script: echo "stageB jobA"
-#     - job: jobB
-#       steps:
-#         - script: echo "stageB jobB"
+- stage: stageB
+  jobs:
+    - job: jobA
+      steps:
+        - script: echo "stageB jobA"
+    - job: jobB
+      steps:
+        - script: echo "stageB jobB"
 
 
 
@@ -71,24 +71,24 @@
 
 
 
-stages:
-- stage: stageA
-  jobs:
-    - job: InitialA
-      steps:
-        -  script: echo "stageA InitialA"
-    - job: InitialB
-      steps:
-        - script: echo "stageA InitialB"
+# stages:
+# - stage: stageA
+#   jobs:
+#     - job: InitialA
+#       steps:
+#         -  script: echo "stageA InitialA"
+#     - job: InitialB
+#       steps:
+#         - script: echo "stageA InitialB"
 
-- stage: stageB
-  jobs:
-    - job: Subsequent
-      dependsOn:
-        - InitialA
-        - InitialB
-      steps:
-        - script: echo "stageB Subsequent"
+# - stage: stageB
+#   jobs:
+#     - job: Subsequent
+#       dependsOn:
+#         - InitialA
+#         - InitialB
+#       steps:
+#         - script: echo "stageB Subsequent"
 
 
 
