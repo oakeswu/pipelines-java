@@ -71,24 +71,24 @@
 
 
 
-# stages:
-# - stage: stageA
-#   jobs:
-#     - job: InitialA
-#       steps:
-#         -  script: echo "stageA InitialA"
-#     - job: InitialB
-#       steps:
-#         - script: echo "stageA InitialB"
+stages:
+- stage: stageA
+  jobs:
+    - job: InitialA
+      steps:
+        -  script: echo "stageA InitialA"
+    - job: InitialB
+      steps:
+        - script: echo "stageA InitialB"
 
-# - stage: stageB
-#   jobs:
-#     - job: Subsequent
-#       dependsOn:
-#         - InitialA
-#         - InitialB
-#       steps:
-#         - script: echo "stageB Subsequent"
+- stage: stageB
+  jobs:
+    - job: Subsequent
+      dependsOn:
+        - InitialA
+        - InitialB
+      steps:
+        - script: echo "stageB Subsequent"
 
 
 
@@ -266,13 +266,13 @@
 #   steps:
 #   - script: echo $(varFromA) # this step uses the mapped-in variable
 
-steps:
-# Create a variable
-- bash: |
-    echo "##vso[task.setvariable variable=sauce]crushed tomatoes" # remember to use double quotes
+# steps:
+# # Create a variable
+# - bash: |
+#     echo "##vso[task.setvariable variable=sauce]crushed tomatoes" # remember to use double quotes
 
-# Use the variable
-# "$(sauce)" is replaced by the contents of the `sauce` variable by Azure Pipelines
-# before handing the body of the script to the shell.
-- bash: |
-    echo my pipeline variable is $(sauce)
+# # Use the variable
+# # "$(sauce)" is replaced by the contents of the `sauce` variable by Azure Pipelines
+# # before handing the body of the script to the shell.
+# - bash: |
+#     echo my pipeline variable is $(sauce)
