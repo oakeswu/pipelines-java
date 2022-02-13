@@ -39,24 +39,24 @@
 
 
 
-stages:
-- stage: stageA
-  jobs:
-    - job: jobA
-      steps:
-        -  script: echo "stageA jobA"
-    - job: jobB
-      steps:
-        - script: echo "stageA jobB"
+# stages:
+# - stage: stageA
+#   jobs:
+#     - job: jobA
+#       steps:
+#         -  script: echo "stageA jobA"
+#     - job: jobB
+#       steps:
+#         - script: echo "stageA jobB"
 
-- stage: stageB
-  jobs:
-    - job: jobA
-      steps:
-        - script: echo "stageB jobA"
-    - job: jobB
-      steps:
-        - script: echo "stageB jobB"
+# - stage: stageB
+#   jobs:
+#     - job: jobA
+#       steps:
+#         - script: echo "stageB jobA"
+#     - job: jobB
+#       steps:
+#         - script: echo "stageB jobB"
 
 
 
@@ -276,3 +276,26 @@ stages:
 # # before handing the body of the script to the shell.
 # - bash: |
 #     echo my pipeline variable is $(sauce)
+
+
+
+
+parameters:
+- name: image
+  displayName: Pool Image
+  type: string
+  default: ubuntu-latest
+  values:
+  - windows-latest
+  - ubuntu-latest
+  - macOS-latest
+
+trigger: none
+
+jobs:
+- job: build
+  displayName: build
+  pool: 
+    vmImage: ${{ parameters.image }}
+  steps:
+  - script: echo building $(Build.BuildNumber) with ${{ parameters.image }}
