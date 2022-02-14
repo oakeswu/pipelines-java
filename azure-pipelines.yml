@@ -323,13 +323,18 @@
 #       echo $(isMain) # outputs False
 
 
-# 测试环境变量
+# # 测试环境变量
+# steps:
+#   - bash: echo This script could use $SYSTEM_ACCESSTOKEN
+#     env:
+#       SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+#   - powershell: | 
+#       Write-Host "This is a script that could use $env:SYSTEM_ACCESSTOKEN"
+#       Write-Host "$env:SYSTEM_ACCESSTOKEN = $(System.AccessToken)"
+#     env:
+#       SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+
+
+
 steps:
-  - bash: echo This script could use $SYSTEM_ACCESSdddTOKEN
-    env:
-      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
-  - powershell: | 
-      Write-Host "This is a script that could use $env:SYSTEM_ACCESSTOKEN"
-      Write-Host "$env:SYSTEM_ACCESSTOKEN = $(System.AccessToken)"
-    env:
-      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+    - script: echo $(System.AccessToken)
