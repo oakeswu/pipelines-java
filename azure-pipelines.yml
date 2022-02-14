@@ -335,6 +335,5 @@
 #       SYSTEM_ACCESSTOKEN: $(System.AccessToken)
 
 
-
 steps:
-    - script: echo $(System.AccessToken)
+    - script: echo $(System.AccesssToken)
