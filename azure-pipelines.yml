@@ -302,10 +302,22 @@
 
 
 
-# 模板变量使用
+# # 模板变量使用
+# variables:
+# - template: simple-template.yml
+
+# steps:
+# - script: echo My favorite vegetable is ${{ variables.favoriteVeggie }}.
+
+
+
 variables:
-- template: simple-template.yml
+  staticVar: 'my value' # static variable
+  compileVar: ${{ variables.staticVar }} # compile time expression
+  isMain: $[eq(variables['Build.SourceBranch'], 'refs/heads/main')] # runtime expression
 
 steps:
-- script: echo My favorite vegetable is ${{ variables.favoriteVeggie }}.
-  
+  - script: |
+      echo ${{variables.staticVar}} # outputs my value
+      echo $(compileVar) # outputs my value
+      echo $(isMain) # outputs True
