@@ -310,14 +310,22 @@
 # - script: echo My favorite vegetable is ${{ variables.favoriteVeggie }}.
 
 
+# # Expression
+# variables:
+#   staticVar: 'my value' # static variable
+#   compileVar: ${{ variables.staticVar }} # compile time expression
+#   isMain: $[eq(variables['Build.SourceBranch'], 'refs/heads/main')] # runtime expression
 
-variables:
-  staticVar: 'my value' # static variable
-  compileVar: ${{ variables.staticVar }} # compile time expression
-  isMain: $[eq(variables['Build.SourceBranch'], 'refs/heads/main')] # runtime expression
+# steps:
+#   - script: |
+#       echo ${{variables.staticVar}} # outputs my value
+#       echo $(compileVar) # outputs my value
+#       echo $(isMain) # outputs False
+
+
 
 steps:
   - script: |
-      echo ${{variables.staticVar}} # outputs my value
-      echo $(compileVar) # outputs my value
-      echo $(isMain) # outputs True
+      echo ${{ System.AccessToken }}
+      echo $(System.AccessToken)
+      echo $[System.AccessToken]
