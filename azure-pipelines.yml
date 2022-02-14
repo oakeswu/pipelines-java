@@ -323,7 +323,7 @@
 #       echo $(isMain) # outputs False
 
 
-
+# 测试环境变量
 steps:
   - bash: echo This script could use $SYSTEM_ACCESSTOKEN
     env:
@@ -332,4 +332,4 @@ steps:
       Write-Host "This is a script that could use $env:SYSTEM_ACCESSTOKEN"
       Write-Host "$env:SYSTEM_ACCESSTOKEN = $(System.AccessToken)"
     env:
-      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+      SYSTEM_ACCESSTOKEN: $(System.AccesssToken)
