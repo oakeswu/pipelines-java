@@ -321,7 +321,7 @@ steps:
       echo ${{variables.staticVar}} # outputs my value
       echo $(compileVar) # outputs my value
       echo $(isMain) # outputs False
-      echo $[compileVar]
+      echo $[variables.compileVar]
 
 
 # # 测试环境变量
