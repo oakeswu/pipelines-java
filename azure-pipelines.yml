@@ -302,25 +302,26 @@
 
 
 
-# 模板变量使用
-variables:
-- template: simple-template.yml
-
-steps:
-- script: echo My favorite vegetable is $(variables.favoriteVeggie).
-
-
-# # Expression
+# # 模板变量使用
 # variables:
-#   staticVar: 'my value' # static variable
-#   compileVar: ${{ variables.staticVar }} # compile time expression
-#   isMain: $[eq(variables['Build.SourceBranch'], 'refs/heads/main')] # runtime expression
+# - template: simple-template.yml
 
 # steps:
-#   - script: |
-#       echo ${{variables.staticVar}} # outputs my value
-#       echo $(compileVar) # outputs my value
-#       echo $(isMain) # outputs False
+# - script: echo My favorite vegetable is $(variables.favoriteVeggie).
+
+
+# Expression
+variables:
+  staticVar: 'my value' # static variable
+  compileVar: ${{ variables.staticVar }} # compile time expression
+  isMain: $[eq(variables['Build.SourceBranch'], 'refs/heads/main')] # runtime expression
+
+steps:
+  - script: |
+      echo ${{variables.staticVar}} # outputs my value
+      echo $(compileVar) # outputs my value
+      echo $(isMain) # outputs False
+      echo $[compileVar]
 
 
 # # 测试环境变量
