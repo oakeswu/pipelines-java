@@ -311,7 +311,7 @@
 
 trigger:
   paths:
-    exclude:
+    include:
       - pipelines-java/azure-pipelines.yml
 
 pool: 
