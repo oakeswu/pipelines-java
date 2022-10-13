@@ -324,7 +324,7 @@ steps:
   - script: |
       echo ${{variables.staticVar}} # outputs my value
       echo $(compileVar) # outputs my value
-      echo $(isMain) # outputs False
+#      echo $(isMain) # outputs False
 #      echo $[variables.compileVar]
 
 
