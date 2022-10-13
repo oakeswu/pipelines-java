@@ -310,9 +310,6 @@
 # - script: echo My favorite vegetable is $(variables.favoriteVeggie).
 
 trigger:
-  branches:
-    include:
-      - master
   paths:
     exclude:
       - pipelines-java/azure-pipelines.yml
@@ -334,6 +331,3 @@ steps:
 #       Write-Host "$env:SYSTEM_ACCESSTOKEN = $(System.AccessToken)"
 #     env:
 #       SYSTEM_ACCESSTOKEN: $(System.AccessToken)
-
-
-#  
