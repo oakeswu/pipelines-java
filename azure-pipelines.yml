@@ -312,7 +312,10 @@
 trigger:
   branches:
     include:
-      - feature
+      - master
+  paths:
+    include:
+      - master
 
 pool: 
   vmImage: ubuntu-latest
