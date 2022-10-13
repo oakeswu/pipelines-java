@@ -309,11 +309,6 @@
 # steps:
 # - script: echo My favorite vegetable is $(variables.favoriteVeggie).
 
-trigger:
-  paths:
-    include:
-      - pipelines-java/azure-pipelines.yml
-
 pool: 
   vmImage: ubuntu-latest
 
