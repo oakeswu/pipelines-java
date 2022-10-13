@@ -309,6 +309,13 @@
 # steps:
 # - script: echo My favorite vegetable is $(variables.favoriteVeggie).
 
+trigger:
+  paths:
+    include:
+    - docs
+    exclude:
+    - docs/README.md
+    
 # Expression
 variables:
   staticVar: 'my value' # static variable
@@ -320,7 +327,7 @@ steps:
       echo ${{variables.staticVar}} # outputs my value
       echo $(compileVar) # outputs my value
       echo $(isMain) # outputs False
-      echo $[variables.compileVar]
+#      echo $[variables.compileVar]
 
 
 # # 测试环境变量
