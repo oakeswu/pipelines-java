@@ -315,7 +315,7 @@ trigger:
       - master
   paths:
     include:
-      - master
+      - pipelines-java/azure-pipelines.yml
 
 pool: 
   vmImage: ubuntu-latest
