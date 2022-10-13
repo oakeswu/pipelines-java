@@ -313,19 +313,12 @@ trigger:
   branches:
     include:
       - master
-    
-# Expression
-variables:
-  staticVar: 'my value' # static variable
-  compileVar: ${{ variables.staticVar }} # compile time expression
-  isMain: $[eq(variables['Build.SourceBranch'], 'refs/heads/main')] # runtime expression
+
+pool: 
+  vmImage: ubuntu-latest
 
 steps:
-  - script: |
-      echo ${{variables.staticVar}} # outputs my value
-      echo $(compileVar) # outputs my value
-#      echo $(isMain) # outputs False
-#      echo $[variables.compileVar]
+- script: "Hello world!"
 
 
 # # 测试环境变量
