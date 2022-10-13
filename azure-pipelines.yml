@@ -309,12 +309,6 @@
 # steps:
 # - script: echo My favorite vegetable is $(variables.favoriteVeggie).
 
-trigger:
-  paths:
-    include:
-    - docs
-    exclude:
-    - docs/README.md
     
 # Expression
 variables:
