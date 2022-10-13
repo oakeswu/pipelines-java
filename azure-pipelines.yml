@@ -309,13 +309,6 @@
 # steps:
 # - script: echo My favorite vegetable is $(variables.favoriteVeggie).
 
-trigger:
-  paths:
-    include:
-    - gated-checkin-with-template/*
-    exclude:
-    - gated-checkin-with-template/azure-pipelines-gc.yml
-
 # Expression
 variables:
   staticVar: 'my value' # static variable
